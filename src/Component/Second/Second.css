@@ -1,0 +1,74 @@
+.gold {
+  position: relative;
+  
+  min-width:100vw;
+  height:550px;
+  overflow: hidden;
+  cursor: pointer;
+  background-image: url("https://t4.ftcdn.net/jpg/05/27/16/45/240_F_527164568_TqbSrFfglGsRh6tKdhaadfuo0oKCKBBW.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+ 
+  align-items: center;
+  justify-content: center; 
+}
+
+.overlay {
+  text-align: center; 
+
+  padding: 30px 20px;
+  border-radius: 12px;
+  color: black; 
+  max-width: 700px;
+}
+
+.heading {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+ 
+}
+
+.text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color:black;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+  .overlay {
+    padding: 25px 15px;
+  }
+  .heading {
+    font-size: 2.5rem;
+  }
+  .text {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gold {
+    height: 350px;
+  }
+  .heading {
+    font-size: 2rem;
+  }
+  .text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gold {
+    height: 300px;
+  }
+  .heading {
+    font-size: 1.6rem;
+  }
+  .text {
+    font-size: 0.9rem;
+  }
+}
