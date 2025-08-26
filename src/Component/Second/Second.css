@@ -24,15 +24,16 @@
 }
 
 .heading {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 15px;
  
 }
 
 .text {
-  font-size: 1.2rem;
-  line-height: 1.6;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.0;
   color:black;
   margin-bottom: 10px;
 }

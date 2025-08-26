@@ -1,80 +1,76 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import "./List.css";
 
-export default function MetalsList() {
-  const [data, setData] = useState(null);
+export default function MetalCards() {
+  const [metals, setMetals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchMetals = async () => {
       try {
-        const response = await axios.get("https://api.metals.dev/v1/latest", {
+        const response = await axios.get("https://api.metalpriceapi.com/v1/latest", {
           params: {
-            api_key: "CIDNWLO9NFSWZOLVMPW6681LVMPW6",
-            currency: "USD",
-            unit: "toz",
+            api_key: "9752b013f8b7a93cfe903dc129790bee",
+            base: "USD",
           },
         });
-        setData(response.data);
+        const data = response.data;
+        const metalsArray = Object.entries(data.rates).map(([name, price]) => ({
+          name,
+          price,
+          base: data.base,
+          timestamp: data.timestamp,
+        }));
+        setMetals(metalsArray.slice(0, 12));
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchData();
+    fetchMetals();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (loading) return <p>Loading metals...</p>;
+  if (error) return <p>Error: {error}</p>;
 
-  const usdToInr = data?.currencies?.INR || 0;
-  const metalsInInr = {};
-  if (data?.metals) {
-    for (const [metal, priceUsd] of Object.entries(data.metals)) {
-      metalsInInr[metal] = (priceUsd * usdToInr).toFixed(2);
-    }
-  }
+  const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.2 } },
+  };
 
- 
- 
-  const todayDate = new Date(data?.timestamp).toLocaleDateString();
-  const todayTime = new Date(data?.timestamp).toLocaleTimeString();
-
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Metals Prices</h2>
-      <p>
-        <strong>Date:</strong> {todayDate}
-      </p>
-      <p>
-        <strong>Time:</strong> {todayTime}
-      </p>
-
-      {Object.entries(metalsInInr).map(([metal, priceInr]) => (
-        <div
-          key={metal}
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            padding: "10px",
-            marginBottom: "10px",
-          }}
-        >
-          <h3>{metal.toUpperCase()}</h3>
-          <p>
-         USD: {data.metals[metal]} <br />
-            INR: {priceInr}
-          </p>
-          <p>
-            Open Price: {data.metals[metal]} 
-           
-          </p>
-        </div>
-      ))}
+    <div className="container">
+      <h2 className="title">Metal Prices</h2>
+      <motion.div
+        className="grid"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {metals.map((metal) => (
+          <motion.div key={metal.name} className="card" variants={cardVariants}>
+            <Link to={`/metal/${metal.name}`} state={{ metal }}>
+              <img
+                src="https://img.icons8.com/color/48/000000/diamond.png"
+                alt={metal.name}
+                className="metal-image"
+              />
+              <h3 className="metal-name">{metal.name}</h3>
+              <p className="metal-price">${metal.price}</p>
+            </Link>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 }

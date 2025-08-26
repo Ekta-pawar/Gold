@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./Navbar.css"; // 
+import "./Navbar.css";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
