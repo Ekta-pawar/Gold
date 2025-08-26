@@ -30,7 +30,7 @@ export default function MetalDetail() {
       <button className="back-btn" onClick={() => navigate("/")}>⬅ Back</button>
 
       <div className="detail-card">
-        {/* Left Side - Image */}
+       
         <motion.div
           className="detail-image"
           initial={{ scale: 0.8, opacity: 0 }}

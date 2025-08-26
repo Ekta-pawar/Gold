@@ -63,7 +63,7 @@
   color: #444;
 }
 
-/* ✅ Responsive for mobile */
+
 @media (max-width: 768px) {
   .detail-card {
     flex-direction: column;
